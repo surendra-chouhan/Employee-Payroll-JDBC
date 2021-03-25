@@ -19,4 +19,11 @@ public class EmployeePayrollTest {
         long result = employeePayroll.updateData();
         Assert.assertEquals(1, result);
     }
+
+    @Test
+    public void givenStatement_shouldReturn_employeeDetails_between_givenDateRange() {
+        EmployeePayroll employeePayroll = new EmployeePayroll();
+        List<EmployeePayrollData> employeePayrollDataList = employeePayroll.retrieve_employee_starting_between_daterange();
+        Assert.assertEquals(2, employeePayrollDataList.size());
+    }
 }
