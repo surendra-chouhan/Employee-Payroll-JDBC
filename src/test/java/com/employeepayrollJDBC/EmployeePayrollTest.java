@@ -20,4 +20,12 @@ public class EmployeePayrollTest {
         List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readData();
         Assert.assertEquals(3, employeePayrollDataList.size());
     }
+
+    @Test
+    public void givenUpdateStatement_usingPreparedStatement_forEmployeePayrollTable_shouldReturnTrue() {
+        EmployeePayroll employeePayroll = new EmployeePayroll();
+        employeePayroll.updateData_using_PreparedStatement();
+        List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readData();
+        Assert.assertEquals(3, employeePayrollDataList.size());
+    }
 }

@@ -60,4 +60,18 @@ public class EmployeePayroll {
             throwables.printStackTrace();
         }
     }
+
+    public void updateData_using_PreparedStatement(){
+        String query = "Update employee_payroll set salary= ? where id = ?;";
+        try{
+            Connection connection = this.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setDouble(1, 400000);
+            preparedStatement.setInt(2, 3);
+            long result = preparedStatement.executeUpdate();
+        }
+        catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
 }
