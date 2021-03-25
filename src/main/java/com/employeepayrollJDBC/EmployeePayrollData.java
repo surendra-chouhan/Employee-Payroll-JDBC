@@ -56,4 +56,15 @@ public class EmployeePayrollData {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    @Override
+    public String toString() {
+        return "EmployeePayrollData{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date=" + date +
+                ", salary=" + salary +
+                ", gender='" + gender + '\'' +
+                '}';
+    }
 }
