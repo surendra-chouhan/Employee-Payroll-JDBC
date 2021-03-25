@@ -7,25 +7,16 @@ import java.util.List;
 public class EmployeePayrollTest {
 
     @Test
-    public void givenSelectStatement_shouldReturnTrue() {
+    public void givenSelectStatement_usingPreparedStatement_shouldReturnTrue() {
         EmployeePayroll employeePayroll = new EmployeePayroll();
         List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readData();
         Assert.assertEquals(3, employeePayrollDataList.size());
     }
 
     @Test
-    public void givenUpdateStatementforEmployeePayrollTable_shouldReturnTrue() {
+    public void givenUpdateStatement_usingPreparedStatement_shouldReturnTrue() {
         EmployeePayroll employeePayroll = new EmployeePayroll();
-        employeePayroll.updateData();
-        List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readData();
-        Assert.assertEquals(3, employeePayrollDataList.size());
-    }
-
-    @Test
-    public void givenUpdateStatement_usingPreparedStatement_forEmployeePayrollTable_shouldReturnTrue() {
-        EmployeePayroll employeePayroll = new EmployeePayroll();
-        employeePayroll.updateData_using_PreparedStatement();
-        List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readData();
-        Assert.assertEquals(3, employeePayrollDataList.size());
+        long result = employeePayroll.updateData();
+        Assert.assertEquals(1, result);
     }
 }

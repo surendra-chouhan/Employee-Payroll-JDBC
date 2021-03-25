@@ -18,14 +18,14 @@ public class EmployeePayroll {
         return con;
     }
 
-    public List<EmployeePayrollData> readData(){
+    public List<EmployeePayrollData> readData() {
         String sql_query = "Select * from employee_payroll;";
         List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
-        try{
+        try {
             Connection connection = this.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql_query);
-            while (resultSet.next()){
+            PreparedStatement preparedStatement = connection.prepareStatement(sql_query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
                 int id = resultSet.getInt(1);
                 String name = resultSet.getString(2);
                 Date start = resultSet.getDate(3);
@@ -35,43 +35,32 @@ public class EmployeePayroll {
                 System.out.println("Id : " + id);
                 System.out.println("Name : " + name);
                 System.out.println("Start Date : " + start);
-                System.out.println("Salary : " + salary );
+                System.out.println("Salary : " + salary);
                 System.out.println("Gender : " + gender);
 
-                EmployeePayrollData employeePayroll = new EmployeePayrollData(resultSet.getInt(1),resultSet.getString(2),
-                        resultSet.getDate(3),resultSet.getDouble(4), resultSet.getString(5));
+                EmployeePayrollData employeePayroll = new EmployeePayrollData(resultSet.getInt(1), resultSet.getString(2),
+                        resultSet.getDate(3), resultSet.getDouble(4), resultSet.getString(5));
                 employeePayrollList.add(employeePayroll);
             }
-        }
-        catch (SQLException throwables) {
+            connection.close();
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return employeePayrollList;
     }
 
-    public void updateData(){
-        String query = "Update employee_payroll set salary='800000' where id = '3'";
-        try{
-            Connection connection = this.getConnection();
-            Statement statement = connection.createStatement();
-            long resultset = statement.executeLargeUpdate(query);
-        }
-        catch (SQLException throwables){
-            throwables.printStackTrace();
-        }
-    }
-
-    public void updateData_using_PreparedStatement(){
+    public long updateData() {
         String query = "Update employee_payroll set salary= ? where id = ?;";
-        try{
+        try {
             Connection connection = this.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setDouble(1, 400000);
             preparedStatement.setInt(2, 3);
             long result = preparedStatement.executeUpdate();
-        }
-        catch (SQLException throwables){
+            return result;
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return 0;
     }
 }
