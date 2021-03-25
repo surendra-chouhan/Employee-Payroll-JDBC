@@ -3,7 +3,6 @@ package com.employeepayrollJDBC;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.List;
 
 public class EmployeePayroll {
@@ -50,11 +49,15 @@ public class EmployeePayroll {
         return employeePayrollList;
     }
 
-    public static void listdrivers(){
-        Enumeration<Driver> driverlist = DriverManager.getDrivers();
-        while(driverlist.hasMoreElements()){
-            Driver driverClass = (Driver) driverlist.nextElement();
-            System.out.println(" " + driverClass.getClass().getName());
+    public void updateData(){
+        String query = "Update employee_payroll set salary='800000' where id = '3'";
+        try{
+            Connection connection = this.getConnection();
+            Statement statement = connection.createStatement();
+            long resultset = statement.executeLargeUpdate(query);
+        }
+        catch (SQLException throwables){
+            throwables.printStackTrace();
         }
     }
 }
