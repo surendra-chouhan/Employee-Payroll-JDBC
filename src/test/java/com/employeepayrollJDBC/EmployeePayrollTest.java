@@ -54,6 +54,7 @@ public class EmployeePayrollTest {
         double taxablePay = 60000;
         double tax = 80000;
         double netPay = 3000;
-        employeePayroll.insert_into_payroll_details(payroll_id, basePay, deductions, taxablePay, tax, netPay);
+        int result = employeePayroll.insert_into_payroll_details(payroll_id, basePay, deductions, taxablePay, tax, netPay);
+        Assert.assertEquals(1, result);
     }
 }
