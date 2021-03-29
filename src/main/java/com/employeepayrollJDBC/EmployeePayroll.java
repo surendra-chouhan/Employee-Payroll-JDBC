@@ -152,4 +152,19 @@ public class EmployeePayroll {
         }
         return 0;
     }
+
+    public void delete_record_from_employee_payroll(String name) throws SQLException {
+        Connection connection = this.getConnection();
+        try{
+            connection.setAutoCommit(false);
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from employee_payroll where name = ?;");
+            preparedStatement.setString(1, name);
+            int resultSet = preparedStatement.executeUpdate();
+            connection.commit();
+        }
+        catch (SQLException throwables) {
+            throwables.printStackTrace();
+            connection.rollback();
+        }
+    }
 }

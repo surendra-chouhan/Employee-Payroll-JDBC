@@ -66,4 +66,12 @@ public class EmployeePayrollTest {
         List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
         Assert.assertEquals(5, employeePayrollDataList.size());
     }
+
+    @Test
+    public void delete_employee_from_employee_table() throws SQLException {
+        employeePayroll.delete_record_from_employee_payroll("Karen");
+        List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
+        Assert.assertEquals(4, employeePayrollDataList.size());
+
+    }
 }
