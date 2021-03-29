@@ -18,7 +18,7 @@ public class EmployeePayroll {
         return con;
     }
 
-    public List<EmployeePayrollData> readData() {
+    public List<EmployeePayrollData> readtable() {
         String sql_query = "Select * from employee_payroll;";
         List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
         try {
@@ -26,11 +26,6 @@ public class EmployeePayroll {
             PreparedStatement preparedStatement = connection.prepareStatement(sql_query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int id = resultSet.getInt(1);
-                String name = resultSet.getString(2);
-                Date start = resultSet.getDate(3);
-                double salary = resultSet.getDouble(4);
-                String gender = resultSet.getString(5);
                 EmployeePayrollData employeePayroll = new EmployeePayrollData(resultSet.getInt(1), resultSet.getString(2),
                         resultSet.getDate(3), resultSet.getDouble(4), resultSet.getString(5));
                 employeePayrollList.add(employeePayroll);
@@ -44,7 +39,7 @@ public class EmployeePayroll {
         return employeePayrollList;
     }
 
-    public long updateData(double salary, int id) {
+    public long updatetable(double salary, int id) {
         String query = "Update employee_payroll set salary= ? where id = ?;";
         try {
             Connection connection = this.getConnection();
@@ -69,12 +64,6 @@ public class EmployeePayroll {
             preparedStatement.setDate(1, java.sql.Date.valueOf(date));
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int id = resultSet.getInt(1);
-                String name = resultSet.getString(2);
-                Date start = resultSet.getDate(3);
-                double salary = resultSet.getDouble(4);
-                String gender = resultSet.getString(5);
-
                 EmployeePayrollData employeePayroll = new EmployeePayrollData(resultSet.getInt(1), resultSet.getString(2),
                         resultSet.getDate(3), resultSet.getDouble(4), resultSet.getString(5));
                 employeePayrollDataList.add(employeePayroll);
@@ -87,7 +76,7 @@ public class EmployeePayroll {
         return employeePayrollDataList;
     }
 
-    public List<String> dataManipulation() {
+    public List<String> operationsOnTable() {
         List<String> list = new ArrayList<>();
         String query = "select gender,sum(salary), avg(salary), min(salary), max(salary), count(salary) from employee_payroll GROUP BY gender;";
         try {
@@ -112,5 +101,21 @@ public class EmployeePayroll {
             throwables.printStackTrace();
         }
         return list;
+    }
+
+    public void insert_Values_Into_Tables(String name, String date, double salary, String gender){
+        try{
+            Connection connection = this.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into employee_payroll(name, start, salary, gender) values (?,?,?,?);");
+
+            preparedStatement.setNString(1, name);
+            preparedStatement.setDate(2, Date.valueOf(date));
+            preparedStatement.setDouble(3, salary);
+            preparedStatement.setNString(4, gender);
+            int resultSet = preparedStatement.executeUpdate();
+        }
+        catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }

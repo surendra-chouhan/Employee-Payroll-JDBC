@@ -16,13 +16,13 @@ public class EmployeePayrollTest {
 
     @Test
     public void givenSelectStatement_usingPreparedStatement_shouldReturnTrue() {
-        List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readData();
+        List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
         Assert.assertEquals(3, employeePayrollDataList.size());
     }
 
     @Test
     public void givenUpdateStatement_usingPreparedStatement_shouldReturnTrue() {
-        long result = employeePayroll.updateData(350000, 3);
+        long result = employeePayroll.updatetable(350000, 3);
         Assert.assertEquals(1, result);
     }
 
@@ -34,7 +34,14 @@ public class EmployeePayrollTest {
 
     @Test
     public void get_sum_from_employeePayroll_table() {
-        List<String> list = employeePayroll.dataManipulation();
+        List<String> list = employeePayroll.operationsOnTable();
         Assert.assertEquals(12, list.size());
+    }
+
+    @Test
+    public void insert_newEmployee_in_employeePayroll_table() {
+        employeePayroll.insert_Values_Into_Tables("Peter", "2020-03-07", 500000, "M");
+        List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
+        Assert.assertEquals(4, employeePayrollDataList.size());
     }
 }
