@@ -101,4 +101,18 @@ public class EmployeePayrollTest {
         List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
         Assert.assertEquals(8, employeePayrollDataList.size());
     }
+
+    @Test
+    public void insert_in_synchronised_way_in_a_table() throws SQLException {
+        List<EmployeePayrollData> list = new ArrayList<>();
+        list.add(new EmployeePayrollData(10, "Barry", Date.valueOf("2018-05-10"), 899820, "M"));
+        list.add(new EmployeePayrollData(11, "Diana", Date.valueOf("2020-07-09"), 562320, "F"));
+        Instant start = Instant.now();
+        employeePayroll.insertUsingThreads(list);
+        Instant end = Instant.now();
+        System.out.println("Duration of non thread process is : "  + Duration.between(start, end));
+        List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
+        Assert.assertEquals(10, employeePayrollDataList.size());
+
+    }
 }
