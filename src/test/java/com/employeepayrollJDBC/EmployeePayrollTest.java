@@ -5,7 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.SQLException;
-import java.util.Collections;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.Date;
@@ -86,5 +87,18 @@ public class EmployeePayrollTest {
         employeePayroll.insertUsingArrays(list);
         List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
         Assert.assertEquals(6, employeePayrollDataList.size());
+    }
+
+    @Test
+    public void insert_multiple_records_using_threads() throws SQLException {
+        List<EmployeePayrollData> list = new ArrayList<>();
+        list.add(new EmployeePayrollData(8, "Steve", Date.valueOf("2017-03-09"), 90000, "M"));
+        list.add(new EmployeePayrollData(9, "Wanda", Date.valueOf("2018-06-19"), 90560, "F"));
+        Instant start = Instant.now();
+        employeePayroll.insertUsingThreads(list);
+        Instant end = Instant.now();
+        System.out.println("Duration of non thread process is : "  + Duration.between(start, end));
+        List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
+        Assert.assertEquals(8, employeePayrollDataList.size());
     }
 }
