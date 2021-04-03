@@ -5,7 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
+import java.sql.Date;
 
 public class EmployeePayrollTest {
 
@@ -19,19 +22,19 @@ public class EmployeePayrollTest {
     @Test
     public void givenSelectStatement_usingPreparedStatement_shouldReturnTrue() {
         List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
-        Assert.assertEquals(3, employeePayrollDataList.size());
+        Assert.assertEquals(4, employeePayrollDataList.size());
     }
 
     @Test
     public void givenUpdateStatement_usingPreparedStatement_shouldReturnTrue() {
-        long result = employeePayroll.updatetable(350000, 3);
+        long result = employeePayroll.updatetable(65000, 3);
         Assert.assertEquals(1, result);
     }
 
     @Test
     public void givenStatement_shouldReturn_employeeDetails_between_givenDateRange() {
         List<EmployeePayrollData> employeePayrollDataList = employeePayroll.retrieve_employee_starting_between_daterange("2019-01-01");
-        Assert.assertEquals(2, employeePayrollDataList.size());
+        Assert.assertEquals(3, employeePayrollDataList.size());
     }
 
     @Test
@@ -73,5 +76,15 @@ public class EmployeePayrollTest {
         List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
         Assert.assertEquals(4, employeePayrollDataList.size());
 
+    }
+
+    @Test
+    public void insert_multiple_records_at_a_single_time() throws  SQLException {
+        List<EmployeePayrollData> list = new ArrayList<>();
+        list.add(new EmployeePayrollData(0, "Tony", Date.valueOf("2019-05-19"), 80000, "M"));
+        list.add(new EmployeePayrollData(0, "Natasha", Date.valueOf("2019-01-21"), 65000, "F"));
+        employeePayroll.insertUsingArrays(list);
+        List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
+        Assert.assertEquals(6, employeePayrollDataList.size());
     }
 }

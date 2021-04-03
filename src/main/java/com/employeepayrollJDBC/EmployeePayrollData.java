@@ -1,6 +1,6 @@
 package com.employeepayrollJDBC;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class EmployeePayrollData {
     public int id;
