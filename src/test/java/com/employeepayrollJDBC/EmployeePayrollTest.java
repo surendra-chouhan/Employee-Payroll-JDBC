@@ -46,7 +46,7 @@ public class EmployeePayrollTest {
 
     @Test
     public void insert_newEmployee_in_employeePayroll_table() throws SQLException {
-        employeePayroll.insert_Values_Into_Tables(4,"Peter", "2020-03-07", 500000, "M");
+        employeePayroll.insert_Values_Into_Tables(4, "Peter", "2020-03-07", 500000, "M");
         List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
         Assert.assertEquals(4, employeePayrollDataList.size());
     }
@@ -54,7 +54,7 @@ public class EmployeePayrollTest {
 
     @Test
     public void insert_into_payroll_details() {
-        int payroll_id =1;
+        int payroll_id = 1;
         double basePay = 6000;
         double deductions = 20000;
         double taxablePay = 60000;
@@ -66,7 +66,7 @@ public class EmployeePayrollTest {
 
     @Test
     public void add_new_employee_in_employee_details() throws SQLException {
-        employeePayroll.insert_Values_Into_Tables( 5,"Karen", "2019-08-09", 800000, "F");
+        employeePayroll.insert_Values_Into_Tables(5, "Karen", "2019-08-09", 800000, "F");
         List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
         Assert.assertEquals(5, employeePayrollDataList.size());
     }
@@ -80,7 +80,7 @@ public class EmployeePayrollTest {
     }
 
     @Test
-    public void insert_multiple_records_at_a_single_time() throws  SQLException {
+    public void insert_multiple_records_at_a_single_time() throws SQLException {
         List<EmployeePayrollData> list = new ArrayList<>();
         list.add(new EmployeePayrollData(0, "Tony", Date.valueOf("2019-05-19"), 80000, "M"));
         list.add(new EmployeePayrollData(0, "Natasha", Date.valueOf("2019-01-21"), 65000, "F"));
@@ -97,7 +97,7 @@ public class EmployeePayrollTest {
         Instant start = Instant.now();
         employeePayroll.insertUsingThreads(list);
         Instant end = Instant.now();
-        System.out.println("Duration of non thread process is : "  + Duration.between(start, end));
+        System.out.println("Duration of non thread process is : " + Duration.between(start, end));
         List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
         Assert.assertEquals(8, employeePayrollDataList.size());
     }
@@ -110,9 +110,8 @@ public class EmployeePayrollTest {
         Instant start = Instant.now();
         employeePayroll.insertUsingThreads(list);
         Instant end = Instant.now();
-        System.out.println("Duration of non thread process is : "  + Duration.between(start, end));
+        System.out.println("Duration of non thread process is : " + Duration.between(start, end));
         List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readtable();
         Assert.assertEquals(10, employeePayrollDataList.size());
-
     }
 }
