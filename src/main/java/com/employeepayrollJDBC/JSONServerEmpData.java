@@ -43,4 +43,5 @@ public class JSONServerEmpData {
                 ", salary=" + salary +
                 '}';
     }
+
 }
