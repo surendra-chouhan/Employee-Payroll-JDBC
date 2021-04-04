@@ -59,4 +59,16 @@ public class JSONServerTest {
         int statusCode = response.getStatusCode();
         Assert.assertEquals(200, statusCode);
     }
+
+    @Test
+    public void whenEmployeeisDeletedShouldReturn200ResponseCode() {
+        JSONServerEmpData[] serverEmpData = getEmplist();
+        String employeeJson = new Gson().toJson(serverEmpData);
+        RequestSpecification requestSpecification = RestAssured.given();
+        requestSpecification.header("Content-Type","application/json");
+        requestSpecification.body(employeeJson);
+        Response response = requestSpecification.delete("/employees/delete/5");
+        int statusCode = response.getStatusCode();
+        Assert.assertEquals(200, statusCode);
+    }
 }
